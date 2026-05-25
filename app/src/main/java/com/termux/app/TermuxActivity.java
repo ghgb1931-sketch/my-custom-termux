@@ -226,9 +226,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
         setMargins();
 
-        mTermuxActivityRootView = findViewById(R.id.activity_termux_root_view);
+        mTermuxActivityRootView = new TermuxActivityRootView(this);
         mTermuxActivityRootView.setActivity(this);
-        mTermuxActivityBottomSpaceView = findViewById(R.id.activity_termux_bottom_space_view);
+        mTermuxActivityBottomSpaceView = new android.view.View(this);
         mTermuxActivityRootView.setOnApplyWindowInsetsListener(new TermuxActivityRootView.WindowInsetsListener());
 
         View content = findViewById(android.R.id.content);
@@ -462,7 +462,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     private void setMargins() {
-        RelativeLayout relativeLayout = findViewById(R.id.activity_termux_root_relative_layout);
+        RelativeLayout relativeLayout = new android.widget.RelativeLayout(this);
         int marginHorizontal = mProperties.getTerminalMarginHorizontal();
         int marginVertical = mProperties.getTerminalMarginVertical();
         ViewUtils.setLayoutMarginsInDp(relativeLayout, marginHorizontal, marginVertical, marginHorizontal, marginVertical);
@@ -498,7 +498,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     private void setTermuxSessionsListView() {
-        ListView termuxSessionsListView = findViewById(R.id.terminal_sessions_list);
+        ListView termuxSessionsListView = new android.widget.ListView(this);
         mTermuxSessionListViewController = new TermuxSessionsListViewController(this, mTermuxService.getTermuxSessions());
         termuxSessionsListView.setAdapter(mTermuxSessionListViewController);
         termuxSessionsListView.setOnItemClickListener(mTermuxSessionListViewController);
@@ -564,14 +564,14 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
 
     private void setSettingsButtonView() {
-        ImageButton settingsButton = findViewById(R.id.settings_button);
+        ImageButton settingsButton = new android.widget.ImageButton(this);
         settingsButton.setOnClickListener(v -> {
             ActivityUtils.startActivity(this, new Intent(this, SettingsActivity.class));
         });
     }
 
     private void setNewSessionButtonView() {
-        View newSessionButton = findViewById(R.id.new_session_button);
+        View newSessionButton = new android.widget.Button(this);
         newSessionButton.setOnClickListener(v -> mTermuxTerminalSessionActivityClient.addNewSession(false, null));
         newSessionButton.setOnLongClickListener(v -> {
             TextInputDialogUtils.textInput(TermuxActivity.this, R.string.title_create_named_session, null,
@@ -583,12 +583,12 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     private void setToggleKeyboardView() {
-        findViewById(R.id.toggle_keyboard_button).setOnClickListener(v -> {
+        new android.widget.Button(this).setOnClickListener(v -> {
             mTermuxTerminalViewClient.onToggleSoftKeyboardRequest();
             getDrawer().closeDrawers();
         });
 
-        findViewById(R.id.toggle_keyboard_button).setOnLongClickListener(v -> {
+        new android.widget.Button(this).setOnLongClickListener(v -> {
             toggleTerminalToolbar();
             return true;
         });
@@ -834,12 +834,12 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     public DrawerLayout getDrawer() {
-        return (DrawerLayout) findViewById(R.id.drawer_layout);
+        return (DrawerLayout) new androidx.drawerlayout.widget.DrawerLayout(this);
     }
 
 
     public ViewPager getTerminalToolbarViewPager() {
-        return (ViewPager) findViewById(R.id.terminal_toolbar_view_pager);
+        return (ViewPager) new androidx.viewpager.widget.ViewPager(this);
     }
 
     public float getTerminalToolbarDefaultHeight() {

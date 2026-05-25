@@ -15,15 +15,19 @@ ext {
 android {
     namespace "com.termux"
 
-    compileSdkVersion project.properties.compileSdkVersion.toInteger()
+    compileSdkVersion 34
     ndkVersion = System.getenv("JITPACK_NDK_VERSION") ?: project.properties.ndkVersion
     def appVersionName = System.getenv("TERMUX_APP_VERSION_NAME") ?: ""
     def apkVersionTag = System.getenv("TERMUX_APK_VERSION_TAG") ?: ""
     def splitAPKsForDebugBuilds = System.getenv("TERMUX_SPLIT_APKS_FOR_DEBUG_BUILDS") ?: "1"
     def splitAPKsForReleaseBuilds = System.getenv("TERMUX_SPLIT_APKS_FOR_RELEASE_BUILDS") ?: "0" // F-Droid does not support split APKs #1904
 
-    dependencies {
-        implementation "androidx.annotation:annotation:1.9.0"
+dependencies {
+    implementation 'io.github.Rosemoe.sora-editor:editor:0.23.1'
+
+    implementation "androidx.annotation:annotation:1.9.0"
+
+
         implementation "androidx.core:core:1.13.1"
         implementation "androidx.drawerlayout:drawerlayout:1.2.0"
         implementation "androidx.preference:preference:1.2.1"
@@ -42,7 +46,7 @@ android {
 
     defaultConfig {
         minSdkVersion project.properties.minSdkVersion.toInteger()
-        targetSdkVersion project.properties.targetSdkVersion.toInteger()
+        targetSdkVersion 34
         versionCode 118
         versionName "0.118.0"
 
@@ -60,11 +64,6 @@ android {
         manifestPlaceholders.TERMUX_TASKER_APP_NAME = "Termux:Tasker"
         manifestPlaceholders.TERMUX_WIDGET_APP_NAME = "Termux:Widget"
 
-        externalNativeBuild {
-            ndkBuild {
-                cFlags "-std=c11", "-Wall", "-Wextra", "-Werror", "-Os", "-fno-stack-protector", "-Wl,--gc-sections"
-            }
-        }
 
         splits {
             abi {
@@ -106,11 +105,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    externalNativeBuild {
-        ndkBuild {
-            path "src/main/cpp/Android.mk"
-        }
-    }
 
     lint {
         disable 'ProtectedPermissions'
