@@ -9,35 +9,39 @@
   let
     system = "aarch64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    
+    # 🧠 مكعب الـ Alpha Frame: بيئة بايثون معزولة ومجهزة
+    alphaPython = pkgs.python3.withPackages (ps: with ps; [
+      numpy
+      scipy
+      sympy
+      networkx
+      requests
+      aiohttp
+    ]);
   in
   {
     devShells.${system}.default = pkgs.mkShell {
       name = "nexus-core-shell";
 
-      # أضفنا fastfetch هنا كأداة أصلية خفيفة في النظام
       buildInputs = with pkgs; [
         git
         neovim
         wget
         htop
-        python3
-        python3Packages.pip
         gcc
         cargo
         rustc
-        fastfetch 
+        fastfetch
+        alphaPython # حقن مكعب الذكاء الاصطناعي هنا
       ];
 
       shellHook = ''
         echo "======================================================="
         echo "🚀 Welcome to Nexus Sentinel Hybrid OS Core"
         echo "👤 Developer: ghgb1931-sketch"
-        echo "⚙️  Architecture: ${system} (Optimized for ARM/Mobile)"
-        echo "🧠 Dynamic Resource Allocation: [TURBO MODE ACTIVE]"
+        echo "🧠 Active Cube: [ALPHA FRAME - AI & MATH INITIALIZED]"
         echo "======================================================="
-        
-        # تشغيل الأداة تلقائياً مع إقلاع النظام لعرض العظمة!
-        fastfetch
       '';
     };
   };
