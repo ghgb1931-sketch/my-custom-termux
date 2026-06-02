@@ -1,0 +1,28 @@
+name: Build Alpha Frame ROM
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Combine ROM Parts
+        run: |
+          echo "[🌀 ALPHA FRAME]: Assembling parts..."
+          cat AlphaFrame_part_* > AlphaFrame_Rootfs_v1.tar.gz 2>/dev/null || echo "Parts not uploaded yet, preparing kitchen..."
+
+      - name: Prepare ROM Kitchen Tools
+        run: |
+          echo "[🛠️ ROM KITCHEN]: Installing android-tools..."
+          sudo apt-get update
+          sudo apt-get install -y android-tools-fsutils
+
+      - name: Upload Artifact (Testing Pipeline)
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlphaFrame_Status
+          path: .github/workflows/build.yml
