@@ -14,6 +14,7 @@
     devShells.${system}.default = pkgs.mkShell {
       name = "nexus-core-shell";
 
+      # أضفنا fastfetch هنا كأداة أصلية خفيفة في النظام
       buildInputs = with pkgs; [
         git
         neovim
@@ -24,6 +25,7 @@
         gcc
         cargo
         rustc
+        fastfetch 
       ];
 
       shellHook = ''
@@ -31,8 +33,11 @@
         echo "🚀 Welcome to Nexus Sentinel Hybrid OS Core"
         echo "👤 Developer: ghgb1931-sketch"
         echo "⚙️  Architecture: ${system} (Optimized for ARM/Mobile)"
-        echo "🧠 Dynamic Resource Allocation: Standby..."
+        echo "🧠 Dynamic Resource Allocation: [TURBO MODE ACTIVE]"
         echo "======================================================="
+        
+        # تشغيل الأداة تلقائياً مع إقلاع النظام لعرض العظمة!
+        fastfetch
       '';
     };
   };
